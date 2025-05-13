@@ -1,6 +1,11 @@
 export default async function handler(req, res) {
   const { fdcId } = req.query;
   const apiKey = process.env.USDA_API_KEY;
+
+  if (!fdcId) {
+    return res.status(400).json({ error: 'Missing fdcId parameter' });
+  }
+
   const url = `https://api.nal.usda.gov/fdc/v1/food/${fdcId}?api_key=${apiKey}`;
 
   try {
