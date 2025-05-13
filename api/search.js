@@ -1,6 +1,11 @@
 export default async function handler(req, res) {
   const { query } = req.query;
   const apiKey = process.env.USDA_API_KEY;
+
+  if (!query) {
+    return res.status(400).json({ error: 'Missing query parameter' });
+  }
+
   const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&pageSize=10&api_key=${apiKey}`;
   
   try {
